@@ -1,0 +1,46 @@
+<!-- order_summary.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Order Summary</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_item in order.items.all %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><img src="{{ order_item.item.image.url }}" style="width: 100px;" alt="{{ order_item.item.title }}"></td>
+            <td>{{ order_item.item.title }}</td>
+            <td>${{ order_item.item.price }}</td>
+            <td>{{ order_item.quantity }}</td>
+            <td>${{ order_item.get_final_price }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6">Your cart is empty</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div>
+        <p>Total: ${{ order.get_total }}</p>
+        <!-- Add more information about the order as needed -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
